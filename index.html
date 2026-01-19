@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RSM4CCGEN | Ultimate Data Generator</title>
+    <style>
+        :root {
+            --primary: #E50914; /* The Red */
+            --primary-hover: #b20710;
+            --dark-bg: #141414;
+            --panel-bg: #1f1f1f;
+            --input-bg: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
+            --border: #333333;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --header-height: 70px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--dark-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            height: var(--header-height);
+        }
+
+        /* Logo Container with Link */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+            transition: opacity 0.2s;
+        }
+        
+        .logo-container:hover {
+            opacity: 0.9;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(229, 9, 20, 0.3);
+            white-space: nowrap;
+        }
+
+        /* Telegram Icon Styling */
+        .telegram-logo {
+            width: 24px;
+            height: 24px;
+            fill: #ffffff;
+            transition: transform 0.2s;
+        }
+
+        .logo-container:hover .telegram-logo {
+            transform: scale(1.1);
+            fill: var(--primary);
+        }
+
+        .disclaimer-text {
+            font-size: 0.65rem;
+            color: var(--primary-hover);
+            font-weight: bold;
+            text-align: right;
+            margin-left: 10px;
+            line-height: 1.2;
+        }
+
+        /* --- MAIN BANNER (TELEGRAM) --- */
+        .telegram-banner {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); /* Purple to Blue Gradient */
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 95;
+            position: relative;
+        }
+
+        .banner-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .banner-btn {
+            background-color: #ffffff;
+            color: #2575fc;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        .banner-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        /* --- Main Layout --- */
+        .container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 0;
+            width: 100%;
+            flex: 1;
+            position: relative;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            background-color: var(--panel-bg);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+            height: 100%;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+            z-index: 50;
+        }
+
+        .sidebar h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1.5px;
+            padding-left: 0.5rem;
+        }
+
+        .menu-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.5rem;
+            background: transparent;
+            border: none;
+            border-left: 3px solid transparent;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: left;
+            transition: var(--transition);
+        }
+
+        .menu-btn:hover {
+            background-color: var(--input-bg);
+            color: white;
+        }
+
+        .menu-btn.active {
+            background-color: rgba(229, 9, 20, 0.1);
+            border-left-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .menu-btn svg {
+            margin-right: 12px;
+            opacity: 0.7;
+            width: 18px;
+            height: 18px;
+        }
+
+        .menu-btn.active svg {
+            opacity:1;
+        }
+        
+        .menu-btn.full-gen-btn {
+            margin-top: 1rem;
+            border: 1px solid var(--primary);
+            border-radius: 6px;
+            justify-content: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .menu-btn.full-gen-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* --- Mobile Back Button --- */
+        .mobile-back-btn {
+            display: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        /* --- Content Area --- */
+        main {
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .content-area {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .content-area.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel {
+            background-color: var(--dark-bg);
+            border-radius: 0;
+            border: none;
+            border-top: 1px solid var(--border);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .gen-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 10px rgba(229, 9, 20, 0.4);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .gen-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(229, 9, 20, 0.6);
+        }
+
+        .gen-btn:active {
+            transform: translateY(0);
+        }
+
+        /* --- Data Grid --- */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .data-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .data-box {
+            background-color: var(--input-bg);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .data-box:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .data-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .data-value {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            word-break: break-word;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-action {
+            float: right;
+            color: var(--primary);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 0.8rem;
+        }
+        
+        .data-box:hover .copy-action,
+        .data-box:active .copy-action {
+            opacity: 1;
+        }
+        
+        .highlight-text {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* --- CC & Phone Visuals --- */
+        .cc-visual, .phone-visual {
+            width: 100%;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+        }
+        
+        .cc-visual {
+            background: linear-gradient(135deg, #b00b1e 0%, #500000 100%);
+            color: white;
+            padding: 1.5rem;
+            font-family: monospace;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cc-number-display {
+            font-size: 1.5rem;
+            margin: 1.5rem 0;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 2px rgba(0,0,0,0.5);
+        }
+
+        .phone-visual {
+            background: linear-gradient(135deg, #2a2a2a 0%, #141414 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            font-family: monospace;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border: 1px solid #444;
+            text-align: center;
+        }
+
+        .phone-number-big {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            word-break: break-all;
+        }
+
+        .phone-label {
+            color: var(--primary);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+            margin-top: 1rem;
+            display: block;
+        }
+
+        /* --- Identity Styles --- */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            background: #333;
+            flex-shrink: 0;
+        }
+
+        .tag {
+            background-color: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-right: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        /* --- Toast --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            transform: translate(-50%, 100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .toast.show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+
+        /* --- ANDROID PHONE RESPONSIVE STYLES --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                padding: 0.5rem 1rem;
+                height: 60px;
+            }
+
+            /* Banner on Mobile */
+            .telegram-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+                padding: 1rem;
+                align-items: center;
+            }
+            .banner-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .container {
+                display: block;
+                width: 100%;
+            }
+
+            /* Sidebar becomes Top Tab Bar */
+            .sidebar {
+                order: 1;
+                position: sticky;
+                top: 60px;
+                z-index: 90;
+                width: 100%;
+                padding: 0.5rem 1rem;
+                background: var(--dark-bg);
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                border-right: none;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar::-webkit-scrollbar { display: none; }
+            .sidebar { -ms-overflow-style: none; scrollbar-width: none; }
+
+            .sidebar h3 { display: none; }
+
+            .menu-btn {
+                margin-right: 0.8rem;
+                margin-bottom: 0;
+                flex: 0 0 auto;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                padding: 0.8rem 0.5rem;
+                font-size: 0.85rem;
+                background: transparent;
+                color: var(--text-muted);
+            }
+
+            .menu-btn:hover {
+                background: transparent;
+                color: var(--primary);
+            }
+
+            .menu-btn.active {
+                background: transparent;
+                border-left: none;
+                border-bottom-color: var(--primary);
+                color: var(--primary);
+                opacity: 1;
+            }
+
+            .menu-btn svg {
+                margin-right: 6px;
+                width: 16px;
+                height: 16px;
+                display: none;
+            }
+
+            .menu-btn.full-gen-btn {
+                margin-top: 0;
+                margin-left: auto;
+                padding: 0.6rem 1rem;
+                border-color: var(--primary);
+                background: rgba(229,9,20,0.1);
+            }
+
+            /* Hide Menu Logic */
+            .sidebar.menu-hidden {
+                display: none;
+            }
+
+            /* Mobile Back Button */
+            .mobile-back-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Content Area */
+            main {
+                order: 2;
+                width: 100%;
+                background: var(--dark-bg);
+            }
+
+            .panel {
+                border-radius: 0;
+                border: none;
+                padding: 1.5rem 1rem;
+                min-height: calc(100vh - 140px);
+            }
+
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+            }
+            
+            .gen-btn {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.95rem;
+            }
+
+            /* Stack Data Boxes */
+            .data-grid, .data-grid-3 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Telegram Logo Link Container -->
+        <a href="https://t.me/addlist/ieEsSWX8D91iZDE8" target="_blank" class="logo-container">
+            <span class="logo">RSM4CCGEN</span>
+            <!-- SVG Telegram Icon -->
+            <svg class="telegram-logo" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.93 2.58a1.25 1.25 0 0 0-1.71-.5c-1.66-.78-5.2-2.27-9.58-4.43-.38-3.24-1.6-5.93-3.4-8.07-4.86a1.25 1.25 0 0 0-1.56-.38c-.26-.08-.56-.09-.78.18-.14.22-.45.46-.88.68-1.33-.51-1.2-1.36-2.02-1.82-3.03-.53-1.42-.7-2.8-1.05-4.13a1.25 1.25 0 0 0-1.1-.66c-1.1-.6-2.45-1.05-3.96-.38-1.17-.52-2.32-.57-3.4-.14-2.28-.3-4.62-.48-6.99a1.25 1.25 0 0 0-2.48-.22c-2.7.23-5.45.38-8.18.45-2.73.07-5.45.2-8.14.39-2.68.19-5.34.43-7.95.73-2.6.3-5.17.6-7.7.97a1.25 1.25 0 0 0-1.65-.56c-.32-.09-.63-.09-.92.04-.12.14-.44.34-.89.64-1.32-.44-1.02-1.16-1.75-1.58-2.62-.65-1.43-.86-2.8-1.08-4.08-.2-1.37-.37-2.73-.54-4.08a1.25 1.25 0 0 0-2.48-.25c-2.7.14-5.43.3-8.13.5-2.7.2-5.4.44-8.05.73-2.65.29-5.3.6-7.91 1a1.25 1.25 0 0 0-1.64-.56c-.32-.08-.63-.08-.92.04-.13.13-.44.34-.89.64-1.32-.44-1.02-1.16-1.75-1.58-2.62-.65-1.43-.86-2.8-1.08-4.08-.2-1.37-.37-2.73-.54-4.08a1.25 1.25 0 0 0-2.48-.25c-2.7.14-5.43.3-8.13.5-2.7.2-5.4.44-8.05.73-2.65.29-5.3.6-7.91 1a1.25 1.25 0 0 0-1.64-.56c-.32-.08-.63-.08-.92.04-.13.13-.44.34-.89.64-1.32-.44-1.02-1.16-1.75-1.58-2.62-.65-1.43-.86-2.8-1.08-4.08-.2-1.37-.37-2.73-.54-4.08a1.25 1.25 0 0 0-2.48-.25c-2.7.14-5.43.3-8.13.5-2.7.2-5.4.44-8.05.73-2.65.29-5.3.6-7.91 1a1.25 1.25 0 0 0-1.64-.56c-.32-.08-.63-.08-.92.04z"/>
+            </svg>
+        </a>
+        <div class="disclaimer-text">for dev testing take your responsibility!!</div>
+    </header>
+
+    <!-- NEW TELEGRAM BANNER (Requested) -->
+    <div class="telegram-banner">
+        <div class="banner-text">
+            Join our Telegram channel to get all website updates or for any support.
+        </div>
+        <a href="https://t.me/addlist/ieEsSWX8D91iZDE8" target="_blank" class="banner-btn">
+            Join Now
+        </a>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar-menu">
+            <h3>Generators</h3>
+            <button class="menu-btn active" onclick="switchTool('name', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Fake Name
+            </button>
+            <button class="menu-btn" onclick="switchTool('random-name', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Random Name
+            </button>
+            <button class="menu-btn" onclick="switchTool('business', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                Business
+            </button>
+            <button class="menu-btn" onclick="switchTool('address', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Address
+            </button>
+            <button class="menu-btn" onclick="switchTool('phone', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                Phone
+            </button>
+            <button class="menu-btn" onclick="switchTool('creditcard', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                Credit Card
+            </button>
+            <button class="menu-btn" onclick="switchTool('iban', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                IBAN
+            </button>
+            <button class="menu-btn" onclick="switchTool('bank', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4v0z"></path></svg>
+                Bank Acc
+            </button>
+            
+            <button class="menu-btn full-gen-btn" onclick="switchTool('full-gen', this)">
+                ⚡ FULL GEN
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Mobile Back Button -->
+            <button id="mobile-back-btn" class="mobile-back-btn" onclick="showMenu()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Menu
+            </button>
+            
+            <!-- 1. FAKE NAME GENERATOR -->
+            <section id="tool-name" class="content-area active">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Fake Identity Profile</h2>
+                        <button class="gen-btn" onclick="generateIdentity()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 1 20.49 15"></path></svg>
+                            Generate New Identity
+                        </button>
+                    </div>
+                    
+                    <div class="profile-header">
+                        <img id="id-avatar" src="" alt="Avatar" class="profile-img">
+                        <div class="profile-info">
+                            <h2 id="id-name">Loading...</h2>
+                            <p id="id-job" style="color:var(--primary); margin-bottom:0.5rem;">...</p>
+                            <div>
+                                <span class="tag" id="id-age">Age: --</span>
+                                <span class="tag" id="id-country">Country: --</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-grid">
+                        <div class="data-box">
+                            <span class="data-label">Username</span>
+                            <div class="data-value" id="id-username">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Password</span>
+                            <div class="data-value" id="id-password">...</div>
+                            <span class="copy-action" onclick="copyText('id-password')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Email</span>
+                            <div class="data-value" id="id-email">...</div>
+                            <span class="copy-action" onclick="copyText('id-email')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Phone</span>
+                            <div class="data-value" id="id-phone">...</div>
+                            <span class="copy-action" onclick="copyText('id-phone')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Address</span>
+                            <div class="data-value" id="id-address">...</div>
+                            <span class="copy-action" onclick="copyText('id-address')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Birthday</span>
+                            <div class="data-value" id="id-dob">...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. RANDOM NAME GENERATOR -->
+            <section id="tool-random-name" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Random Name Generator</h2>
+                        <button class="gen-btn" onclick="generateRandomNames()">Generate Names</button>
+                    </div>
+                    <div class="data-grid">
+                        <div class="data-box">
+                            <span class="data-label">Male Name</span>
+                            <div class="data-value" id="rand-male">...</div>
+                            <span class="copy-action" onclick="copyText('rand-male')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Female Name</span>
+                            <div class="data-value" id="rand-female">...</div>
+                            <span class="copy-action" onclick="copyText('rand-female')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Last Name</span>
+                            <div class="data-value" id="rand-last">...</div>
+                            <span class="copy-action" onclick="copyText('rand-last')">COPY</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. BUSINESS NAME GENERATOR -->
+            <section id="tool-business" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Business Name Generator</h2>
+                        <button class="gen-btn" onclick="generateBusiness()">Generate Business</button>
+                    </div>
+                    <div class="data-grid">
+                        <div class="data-box">
+                            <span class="data-label">Company Name</span>
+                            <div class="data-value" id="biz-name">...</div>
+                            <span class="copy-action" onclick="copyText('biz-name')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Industry</span>
+                            <div class="data-value" id="biz-industry">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Catch Phrase</span>
+                            <div class="data-value" id="biz-slogan">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Tax ID</span>
+                            <div class="data-value" id="biz-tax">...</div>
+                            <span class="copy-action" onclick="copyText('biz-tax')">COPY</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ADDRESS GENERATOR -->
+            <section id="tool-address" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Address Generator</h2>
+                        <button class="gen-btn" onclick="generateAddress()">Generate Address</button>
+                    </div>
+                    <div class="data-grid">
+                        <div class="data-box">
+                            <span class="data-label">Street Address</span>
+                            <div class="data-value" id="addr-street">...</div>
+                            <span class="copy-action" onclick="copyText('addr-street')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">City</span>
+                            <div class="data-value" id="addr-city">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">State / Province</span>
+                            <div class="data-value" id="addr-state">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Zip / Postal Code</span>
+                            <div class="data-value" id="addr-zip">...</div>
+                        </div>
+                        <div class="data-box" style="grid-column: span 2;">
+                            <span class="data-label">Country</span>
+                            <div class="data-value" id="addr-country">...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. PHONE GENERATOR -->
+            <section id="tool-phone" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Phone Number Generator</h2>
+                        <button class="gen-btn" onclick="generatePhone()">Generate Number</button>
+                    </div>
+
+                    <div class="phone-visual">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; color:#888; font-size:0.8rem; text-transform:uppercase;">
+                            <span id="phone-v-country">USA</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        </div>
+                        <div class="phone-number-big" id="phone-v-number">+1 234 567 890</div>
+                        <span class="phone-label">Mobile Phone</span>
+                    </div>
+
+                    <div class="data-grid">
+                        <div class="data-box">
+                            <span class="data-label">US Format</span>
+                            <div class="data-value" id="phone-us">...</div>
+                            <span class="copy-action" onclick="copyText('phone-us')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">UK Format</span>
+                            <div class="data-value" id="phone-uk">...</div>
+                            <span class="copy-action" onclick="copyText('phone-uk')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">International</span>
+                            <div class="data-value" id="phone-int">...</div>
+                            <span class="copy-action" onclick="copyText('phone-int')">COPY</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. CREDIT CARD GENERATOR -->
+            <section id="tool-creditcard" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Fake Credit Card Generator</h2>
+                        <button class="gen-btn" onclick="generateCreditCard()">Generate Card</button>
+                    </div>
+
+                    <div class="cc-visual">
+                        <div style="font-size:0.8rem; opacity:0.8; margin-bottom:5px;">CREDIT CARD</div>
+                        <div class="cc-number-display" id="cc-display">#### #### #### ####</div>
+                        <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                            <div>
+                                <div style="font-size:0.7rem; opacity:0.7;">CARD HOLDER</div>
+                                <div id="cc-name">YOUR NAME</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:0.7rem; opacity:0.7;">EXPIRES</div>
+                                <div id="cc-exp">MM/YY</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-grid">
+                        <div class="data-box">
+                            <span class="data-label">Card Number</span>
+                            <div class="data-value" id="cc-number">...</div>
+                            <span class="copy-action" onclick="copyText('cc-number')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">CVV</span>
+                            <div class="data-value" id="cc-cvv">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Expiry Date</span>
+                            <div class="data-value" id="cc-expiry">...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. IBAN GENERATOR -->
+            <section id="tool-iban" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Fake IBAN Generator</h2>
+                        <button class="gen-btn" onclick="generateIBAN()">Generate IBAN</button>
+                    </div>
+                    <div class="data-grid">
+                        <div class="data-box" style="grid-column: span 2;">
+                            <span class="data-label">IBAN (International)</span>
+                            <div class="data-value" id="iban-value" style="font-size:1.3rem; letter-spacing:1px;">...</div>
+                            <span class="copy-action" onclick="copyText('iban-value')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Country Code</span>
+                            <div class="data-value" id="iban-country">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Bank Code</span>
+                            <div class="data-value" id="iban-bank">...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. BANK ACCOUNT GENERATOR -->
+            <section id="tool-bank" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Fake Bank Account Generator</h2>
+                        <button class="gen-btn" onclick="generateBank()">Generate Account</button>
+                    </div>
+                    <div class="data-grid">
+                        <div class="data-box">
+                            <span class="data-label">Bank Name</span>
+                            <div class="data-value" id="bank-name">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Account Number</span>
+                            <div class="data-value" id="bank-acc">...</div>
+                            <span class="copy-action" onclick="copyText('bank-acc')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Routing Number (USA)</span>
+                            <div class="data-value" id="bank-route">...</div>
+                            <span class="copy-action" onclick="copyText('bank-route')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">SWIFT/BIC</span>
+                            <div class="data-value" id="bank-swift">...</div>
+                            <span class="copy-action" onclick="copyText('bank-swift')">COPY</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem; text-align: center;">
+                        <p style="margin-bottom: 1rem; color: var(--text-muted);">Want everything combined with passport and details?</p>
+                        <button class="gen-btn" style="display: inline-flex; background-color: #333;" onclick="switchTool('full-gen', this)">
+                            ⚡ GO TO FULL GEN
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. FULL GEN (NEW) -->
+            <section id="tool-full-gen" class="content-area">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Full Identity Generator</h2>
+                        <button class="gen-btn" onclick="generateFullGen()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 1 20.49 15"></path></svg>
+                            Generate Full Profile
+                        </button>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(229, 9, 20, 0.1); border: 1px solid var(--primary); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span style="display:block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Current Country</span>
+                            <span id="fg-country-name" style="font-size: 1.5rem; font-weight: bold;">Select Country...</span>
+                        </div>
+                        <div id="fg-country-flag" style="font-size: 4rem;"></div>
+                    </div>
+
+                    <div class="data-grid-3">
+                        <!-- Personal Info -->
+                        <div class="data-box">
+                            <span class="data-label">Full Name</span>
+                            <div class="data-value" id="fg-name">...</div>
+                            <span class="copy-action" onclick="copyText('fg-name')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Gender</span>
+                            <div class="data-value" id="fg-gender">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Age (Years)</span>
+                            <div class="data-value" id="fg-age">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Height (CM)</span>
+                            <div class="data-value" id="fg-height">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Mother's Maiden Name</span>
+                            <div class="data-value" id="fg-mother">...</div>
+                            <span class="copy-action" onclick="copyText('fg-mother')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Passport Number</span>
+                            <div class="data-value highlight-text" id="fg-passport">...</div>
+                            <span class="copy-action" onclick="copyText('fg-passport')">COPY</span>
+                        </div>
+                        <div class="data-box" style="grid-column: span 2;">
+                            <span class="data-label">Address</span>
+                            <div class="data-value" id="fg-address">...</div>
+                            <span class="copy-action" onclick="copyText('fg-address')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">City</span>
+                            <div class="data-value" id="fg-city">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Phone Number</span>
+                            <div class="data-value" id="fg-phone">...</div>
+                            <span class="copy-action" onclick="copyText('fg-phone')">COPY</span>
+                        </div>
+                        
+                        <!-- Banking -->
+                        <div class="data-box" style="border-color: var(--primary);">
+                            <span class="data-label" style="color:var(--primary);">Bank Name</span>
+                            <div class="data-value" id="fg-bank-name">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Bank Code</span>
+                            <div class="data-value" id="fg-bank-code">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">BIC / SWIFT</span>
+                            <div class="data-value" id="fg-bic">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Account Number</span>
+                            <div class="data-value" id="fg-account">...</div>
+                            <span class="copy-action" onclick="copyText('fg-account')">COPY</span>
+                        </div>
+                        <div class="data-box" style="grid-column: span 2;">
+                            <span class="data-label">IBAN</span>
+                            <div class="data-value" id="fg-iban">...</div>
+                            <span class="copy-action" onclick="copyText('fg-iban')">COPY</span>
+                        </div>
+
+                        <!-- Credit Card -->
+                        <div class="data-box" style="border-color: var(--primary);">
+                            <span class="data-label" style="color:var(--primary);">Credit Card Type</span>
+                            <div class="data-value" id="fg-cc-type">...</div>
+                        </div>
+                        <div class="data-box" style="grid-column: span 2;">
+                            <span class="data-label">Credit Card Number</span>
+                            <div class="data-value highlight-text" id="fg-cc-num">...</div>
+                            <span class="copy-action" onclick="copyText('fg-cc-num')">COPY</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">Expiry</span>
+                            <div class="data-value" id="fg-cc-exp">...</div>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">CVV2</span>
+                            <div class="data-value" id="fg-cc-cvv">...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script>
+        // --- DATASETS ---
+        const firstNamesMale = ["James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph", "Thomas", "Charles", "Liam", "Noah", "Oliver", "Elijah", "Lucas", "Mateo", "Julian", "Hans", "Ali", "Wei", "Kenji", "Carlos", "Mohammed", "Vikram", "Ivan"];
+        const firstNamesFemale = ["Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Olivia", "Emma", "Ava", "Charlotte", "Sophia", "Isabella", "Maria", "Fatima", "Yuki", "Sofia", "Elena", "Wei", "Priya", "Anna"];
+        const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Muller", "Schmidt", "Fischer", "Weber", "Wagner", "Becker", "Schulz", "Rossi", "Ferrari", "Romano", "Colombo", "Kumar", "Patel", "Singh", "Kim", "Tanaka", "Suzuki", "Wang", "Li", "Zhang", "Ali", "Khan", "Ahmed", "Hassan", "Svensson", "Johansson", "Andersen", "Hansen", "Larsen", "Pedersen"];
+        const streets = ["Oak Street", "Maple Avenue", "Cedar Lane", "Pine Road", "Washington Blvd", "Lake View Drive", "Elm Street", "Sunset Boulevard", "River Road", "Hillcrest Drive", "Main Street", "Park Avenue"];
+        const cities = ["Springfield", "Franklin", "Greenville", "Bristol", "Clinton", "Georgetown", "Madison", "Salem", "Fairview", "Washington", "Berlin", "Munich", "Paris", "London", "Rome", "Madrid", "Tokyo", "Beijing", "Seoul", "Moscow", "Sydney"];
+        const states = ["California", "New York", "Texas", "Florida", "Illinois", "Pennsylvania", "Ohio", "Georgia", "North Carolina", "Michigan", "Bavaria", "Ontario", "New South Wales"];
+        const countries = ["United States", "United Kingdom", "Germany", "France", "Spain", "Italy", "Canada", "Australia"];
+        const domains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "example.com"];
+        const jobTitles = ["Software Engineer", "Project Manager", "Designer", "Marketing Specialist", "Data Analyst", "Product Owner", "Sales Representative", "HR Manager", "Doctor", "Teacher"];
+        const bizAdj = ["Global", "Advanced", "Dynamic", "Creative", "Future", "Smart", "Rapid", "Prime", "Eco", "Tech", "United"];
+        const bizNoun = ["Solutions", "Systems", "Technologies", "Industries", "Partners", "Associates", "Networks", "Consulting", "Labs", "Group"];
+        
+        // Realistic Banks for specific countries
+        const realBanks = {
+            "DE": ["Deutsche Bank", "Commerzbank", "Sparkasse Wetzlar", "Postbank", "KfW"],
+            "US": ["Chase Bank", "Bank of America", "Wells Fargo", "Citibank", "US Bank"],
+            "GB": ["HSBC", "Barclays", "Lloyds Bank", "NatWest", "Santander UK"],
+            "FR": ["BNP Paribas", "Crédit Agricole", "Société Générale", "BPCE"],
+            "IT": ["Intesa Sanpaolo", "UniCredit", "Banca Monte dei Paschi"],
+            "ES": ["Banco Santander", "Banco Bilbao Vizcaya", "CaixaBank"],
+            "CN": ["Industrial and Commercial Bank of China", "China Construction Bank", "Bank of China"],
+            "JP": ["Bank of Tokyo-Mitsubishi", "Sumitomo Mitsui", "Mizuho Bank"],
+            "RU": ["Sberbank", "VTB", "Gazprombank"],
+            "BR": ["Banco do Brasil", "Itaú Unibanco", "Banco Bradesco"],
+            "IN": ["State Bank of India", "ICICI Bank", "HDFC Bank"]
+        };
+
+        // --- FULL GEN COUNTRY LIST WITH FLAGS ---
+        const countryList = [
+            {code: "AR", name: "Argentina", flag: "🇦🇷"}, {code: "AM", name: "Armenia", flag: "🇦🇲"}, 
+            {code: "AU", name: "Australia", flag: "🇦🇺"}, {code: "AT", name: "Austria", flag: "🇦🇹"}, 
+            {code: "BD", name: "Bangladesh", flag: "🇧🇩"}, {code: "BE", name: "Belgium", flag: "🇧🇪"}, 
+            {code: "BA", name: "Bosnia and Herzegovina", flag: "🇧🇦"}, {code: "BR", name: "Brazil", flag: "🇧🇷"}, 
+            {code: "BG", name: "Bulgaria", flag: "🇧🇬"}, {code: "CA", name: "Canada", flag: "🇨🇦"}, 
+            {code: "CN", name: "China", flag: "🇨🇳"}, {code: "HR", name: "Croatia", flag: "🇭🇷"}, 
+            {code: "CY", name: "Cyprus", flag: "🇨🇾"}, {code: "CZ", name: "Czech Republic", flag: "🇨🇿"}, 
+            {code: "DK", name: "Denmark", flag: "🇩🇰"}, {code: "EG", name: "Egypt", flag: "🇪🇬"}, 
+            {code: "EE", name: "Estonia", flag: "🇪🇪"}, {code: "FI", name: "Finland", flag: "🇫🇮"}, 
+            {code: "FR", name: "France", flag: "🇫🇷"}, {code: "GE", name: "Georgia", flag: "🇬🇪"}, 
+            {code: "DE", name: "Germany", flag: "🇩🇪"}, {code: "GB", name: "Great Britain", flag: "🇬🇧"}, 
+            {code: "GR", name: "Greece", flag: "🇬🇷"}, {code: "HK", name: "Hong Kong", flag: "🇭🇰"}, 
+            {code: "HU", name: "Hungary", flag: "🇭🇺"}, {code: "IS", name: "Iceland", flag: "🇮🇸"}, 
+            {code: "IN", name: "India", flag: "🇮🇳"}, {code: "ID", name: "Indonesia", flag: "🇮🇩"}, 
+            {code: "IR", name: "Iran", flag: "🇮🇷"}, {code: "IL", name: "Israel", flag: "🇮🇱"}, 
+            {code: "IT", name: "Italia", flag: "🇮🇹"}, {code: "JP", name: "Japan", flag: "🇯🇵"}, 
+            {code: "JO", name: "Jordan", flag: "🇯🇴"}, {code: "KZ", name: "Kazakhstan", flag: "🇰🇿"}, 
+            {code: "LV", name: "Latvia", flag: "🇱🇻"}, {code: "LT", name: "Lithuania", flag: "🇱🇹"}, 
+            {code: "MY", name: "Malaysia", flag: "🇲🇾"}, {code: "MX", name: "Mexico", flag: "🇲🇽"}, 
+            {code: "MD", name: "Moldova", flag: "🇲🇩"}, {code: "MN", name: "Mongolia", flag: "🇲🇳"}, 
+            {code: "ME", name: "Montenegro", flag: "🇲🇪"}, {code: "NP", name: "Nepal", flag: "🇳🇵"}, 
+            {code: "NL", name: "Netherlands", flag: "🇳🇱"}, {code: "NZ", name: "New Zeland", flag: "🇳🇿"}, 
+            {code: "NG", name: "Nigeria", flag: "🇳🇬"}, {code: "NO", name: "Norway", flag: "🇳🇴"}, 
+            {code: "PE", name: "Peru", flag: "🇵🇪"}, {code: "PH", name: "Philippines", flag: "🇵🇭"}, 
+            {code: "PL", name: "Poland", flag: "🇵🇱"}, {code: "PT", name: "Portugal", flag: "🇵🇹"}, 
+            {code: "RO", name: "Romania", flag: "🇷🇴"}, {code: "RU", name: "Russia", flag: "🇷🇺"}, 
+            {code: "SA", name: "Saudi Arabia", flag: "🇸🇦"}, {code: "RS", name: "Serbia", flag: "🇷🇸"}, 
+            {code: "SG", name: "Singapore", flag: "🇸🇬"}, {code: "SK", name: "Slovakia", flag: "🇸🇰"}, 
+            {code: "SI", name: "Slovenia", flag: "🇸🇮"}, {code: "ZA", name: "South Africa", flag: "🇿🇦"}, 
+            {code: "KR", name: "South Korea", flag: "🇰🇷"}, {code: "ES", name: "Spain", flag: "🇪🇸"}, 
+            {code: "SE", name: "Sweden", flag: "🇸🇪"}, {code: "CH", name: "Switzerland", flag: "🇨🇭"}, 
+            {code: "TW", name: "Taiwan", flag: "🇹🇼"}, {code: "TH", name: "Thailand", flag: "🇹🇭"}, 
+            {code: "TR", name: "Turkey", flag: "🇹🇷"}, {code: "US", name: "USA", flag: "🇺🇸"}, 
+            {code: "UG", name: "Uganda", flag: "🇺🇬"}, {code: "UA", name: "Ukraine", flag: "🇺🇦"}, 
+            {code: "VE", name: "Venezuela", flag: "🇻🇪"}, {code: "VN", name: "Vietnam", flag: "🇻🇳"}
+        ];
+
+        // --- UTILITIES ---
+        function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function generateRandomString(len) {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let res = '';
+            for(let i=0; i<len; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+            return res;
+        }
+        
+        function generateCCNum(prefix, length) {
+            let cc = prefix;
+            while (cc.length < (length - 1)) cc += getRandomInt(0, 9);
+            // Luhn Algorithm Check Digit
+            let sum = 0;
+            let isEven = true;
+            for (let i = cc.length - 1; i >= 0; i--) {
+                let digit = parseInt(cc[i]);
+                if (!isEven) { digit *= 2; if (digit > 9) digit -= 9; }
+                sum += digit;
+                isEven = !isEven;
+            }
+            return cc + ((10 - (sum % 10)) % 10);
+        }
+
+        // --- NAVIGATION ---
+        function switchTool(toolId, btnElement) {
+            // UI Update - remove active from all
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+            // Add active to clicked button if provided
+            if(btnElement) btnElement.classList.add('active');
+
+            // Content Update
+            document.querySelectorAll('.content-area').forEach(area => area.classList.remove('active'));
+            document.getElementById(`tool-${toolId}`).classList.add('active');
+
+            // --- MOBILE ONLY: HIDE MENU ---
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar-menu');
+                const backBtn = document.getElementById('mobile-back-btn');
+                
+                if(sidebar) sidebar.classList.add('menu-hidden');
+                if(backBtn) backBtn.style.display = 'flex';
+                
+                // Scroll sidebar item into view so => selected tab is hidden smoothly
+                if(btnElement) {
+                    btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            }
+        }
+
+        function showMenu() {
+            const sidebar = document.getElementById('sidebar-menu');
+            const backBtn = document.getElementById('mobile-back-btn');
+            
+            if(sidebar) sidebar.classList.remove('menu-hidden');
+            if(backBtn) backBtn.style.display = 'none';
+        }
+
+        // --- GENERATORS ---
+
+        function generateIdentity() {
+            const gender = Math.random() > 0.5 ? 'male' : 'female';
+            const fName = gender === 'male' ? getRandom(firstNamesMale) : getRandom(firstNamesFemale);
+            const lName = getRandom(lastNames);
+            const age = getRandomInt(18, 75);
+            const country = getRandom(countries);
+            const job = getRandom(jobTitles);
+            const seed = fName + lName + getRandomInt(1,1000);
+            
+            document.getElementById('id-name').textContent = `${fName} ${lName}`;
+            document.getElementById('id-avatar').src = `https://picsum.photos/seed/${seed}/200/200`;
+            document.getElementById('id-job').textContent = job;
+            document.getElementById('id-age').textContent = `Age: ${age}`;
+            document.getElementById('id-country').textContent = country;
+            
+            document.getElementById('id-username').textContent = `${fName.toLowerCase()}${getRandomInt(10,99)}`;
+            document.getElementById('id-password').textContent = generateRandomString(10) + getRandomInt(1,99) + "!";
+            document.getElementById('id-email').textContent = `${fName.toLowerCase()}.${lName.toLowerCase()}@${getRandom(domains)}`;
+            document.getElementById('id-phone').textContent = `+1 (${getRandomInt(200,999)}) ${getRandomInt(200,999)}-${getRandomInt(1000,9999)}`;
+            document.getElementById('id-address').textContent = `${getRandomInt(1,999)} ${getRandom(streets)}`;
+            document.getElementById('id-dob').textContent = `${getRandomInt(1950,2005)}-${getRandomInt(1,12).toString().padStart(2,'0')}-${getRandomInt(1,28).toString().padStart(2,'0')}`;
+        }
+
+        function generateRandomNames() {
+            document.getElementById('rand-male').textContent = `${getRandom(firstNamesMale)} ${getRandom(lastNames)}`;
+            document.getElementById('rand-female').textContent = `${getRandom(firstNamesFemale)} ${getRandom(lastNames)}`;
+            document.getElementById('rand-last').textContent = getRandom(lastNames);
+        }
+
+        function generateBusiness() {
+            document.getElementById('biz-name').textContent = `${getRandom(bizAdj)} ${getRandom(bizNoun)}`;
+            document.getElementById('biz-industry').textContent = getRandom(["Technology", "Finance", "Healthcare", "Retail", "Energy"]);
+            document.getElementById('biz-slogan').textContent = "Innovating your future with excellence.";
+            document.getElementById('biz-tax').textContent = `${getRandomInt(10,99)}-${getRandomInt(1000000,9999999)}`;
+        }
+
+        function generateAddress() {
+            document.getElementById('addr-street').textContent = `${getRandomInt(1,9999)} ${getRandom(streets)}`;
+            document.getElementById('addr-city').textContent = getRandom(cities);
+            document.getElementById('addr-state').textContent = getRandom(states);
+            document.getElementById('addr-zip').textContent = getRandomInt(10000, 99999);
+            document.getElementById('addr-country').textContent = getRandom(countries);
+        }
+
+        function generatePhone() {
+            const base = () => getRandomInt(200,999);
+            const line = () => getRandomInt(1000,9999);
+            
+            // Generate random formats
+            const usPhone = `(${base()}) ${base()}-${line()}`;
+            const ukPhone = `+44 7${getRandomInt(0,9)}${getRandomInt(100,999)} ${line()}`;
+            const intlPhone = `+${getRandomInt(1,90)} ${base()} ${line()}`;
+
+            // Update Grid Values
+            document.getElementById('phone-us').textContent = usPhone;
+            document.getElementById('phone-uk').textContent = ukPhone;
+            document.getElementById('phone-int').textContent = intlPhone;
+
+            // Update Visual View (Randomly pick one of the formats for visual)
+            const formats = [
+                {country: "USA", phone: usPhone},
+                {country: "UK", phone: ukPhone},
+                {country: "INTL", phone: intlPhone}
+            ];
+            const selected = getRandom(formats);
+
+            document.getElementById('phone-v-country').textContent = selected.country;
+            document.getElementById('phone-v-number').textContent = selected.phone;
+        }
+
+        function generateCreditCard() {
+            const ccNum = generateCCNum("4", 16);
+            const exp = `${getRandomInt(1,12).toString().padStart(2,'0')}/${getRandomInt(24,32).toString().slice(-2)}`;
+            const cvv = getRandomInt(100,999);
+            const name = "CARD HOLDER";
+
+            document.getElementById('cc-number').textContent = ccNum;
+            document.getElementById('cc-cvv').textContent = cvv;
+            document.getElementById('cc-expiry').textContent = exp;
+
+            document.getElementById('cc-display').textContent = ccNum.match(/.{1,4}/g).join(' ');
+            document.getElementById('cc-name').textContent = name;
+            document.getElementById('cc-exp').textContent = exp;
+        }
+
+        function generateIBAN() {
+            const countryCode = getRandom(["DE", "FR", "GB", "IT", "ES"]);
+            const checkDigits = getRandomInt(10,99);
+            const bankCode = generateRandomString(8).toUpperCase();
+            const account = generateRandomString(10).toUpperCase();
+            const iban = `${countryCode}${checkDigits} ${bankCode} ${account}`;
+
+            document.getElementById('iban-value').textContent = iban;
+            document.getElementById('iban-country').textContent = countryCode;
+            document.getElementById('iban-bank').textContent = bankCode;
+        }
+
+        function generateBank() {
+            document.getElementById('bank-name').textContent = getRandom(["Chase Bank", "Bank of America", "Wells Fargo", "Citibank", "HSBC", "Barclays", "Deutsche Bank"]);
+            document.getElementById('bank-acc').textContent = generateRandomString(12);
+            document.getElementById('bank-route').textContent = getRandomInt(100000000, 999999999);
+            document.getElementById('bank-swift').textContent = `${generateRandomString(6).toUpperCase()}${generateRandomString(2).toUpperCase()}${getRandomInt(1,9)}`;
+        }
+
+        function generateFullGen() {
+            // 1. Select Country
+            const countryObj = getRandom(countryList);
+            const countryCode = countryObj.code;
+            
+            // 2. Generate Personal Data
+            const gender = Math.random() > 0.5 ? 'Male' : 'Female';
+            const fName = gender === 'Male' ? getRandom(firstNamesMale) : getRandom(firstNamesFemale);
+            const lName = getRandom(lastNames);
+            const age = getRandomInt(18, 80);
+            const height = getRandomInt(150, 200); 
+            const mother = getRandom(lastNames);
+            const passport = `${countryCode.toUpperCase()}${getRandomInt(1000000, 9999999)}`;
+            const city = getRandom(cities);
+            const streetNum = getRandomInt(1, 999);
+            const streetName = getRandom(streets);
+            const phone = `+${getRandomInt(1,99)} ${getRandomInt(100,999)} ${getRandomInt(100,999)} ${getRandomInt(1000,9999)}`;
+
+            // 3. Generate Banking Data (Country specific if available)
+            let bankName = getRandom(["Global Bank", "Universal Credit", "City Trust"]);
+            if (realBanks[countryCode]) {
+                bankName = getRandom(realBanks[countryCode]);
+            }
+            
+            const bankCode = generateRandomString(8).toUpperCase();
+            const bic = `${bankCode}${countryCode}${getRandomInt(1,9)}${getRandomInt(10,99)}`.substring(0,11);
+            const accountNum = generateRandomString(12);
+            const iban = `${countryCode}${getRandomInt(10,99)} ${bankCode} ${accountNum.substring(0,10)}`;
+
+            // 4. Generate Credit Card
+            const ccType = getRandom(["Visa", "MasterCard", "Amex"]);
+            let ccPrefix = ccType === "Visa" ? "4" : (ccType === "Amex" ? "34" : "51");
+            let ccLen = ccType === "Amex" ? 15 : 16;
+            const ccNum = generateCCNum(ccPrefix, ccLen);
+            const ccExp = `${getRandomInt(1,12).toString().padStart(2,'0')}/${getRandomInt(24,30).toString().slice(-2)}`;
+            const ccCvv = getRandomInt(100, 999);
+
+            // --- UPDATE DOM ---
+            
+            // Header
+            document.getElementById('fg-country-name').textContent = countryObj.name;
+            document.getElementById('fg-country-flag').textContent = countryObj.flag;
+
+            // Personal
+            document.getElementById('fg-name').textContent = `${fName} ${lName}`;
+            document.getElementById('fg-gender').textContent = gender;
+            document.getElementById('fg-age').textContent = age;
+            document.getElementById('fg-height').textContent = height + " cm";
+            document.getElementById('fg-mother').textContent = mother;
+            document.getElementById('fg-passport').textContent = passport;
+            document.getElementById('fg-address').textContent = `${streetNum} ${streetName}`;
+            document.getElementById('fg-city').textContent = city;
+            document.getElementById('fg-phone').textContent = phone;
+
+            // Banking
+            document.getElementById('fg-bank-name').textContent = bankName;
+            document.getElementById('fg-bank-code').textContent = bankCode;
+            document.getElementById('fg-bic').textContent = bic;
+            document.getElementById('fg-account').textContent = accountNum;
+            document.getElementById('fg-iban').textContent = iban;
+
+            // CC
+            document.getElementById('fg-cc-type').textContent = ccType;
+            document.getElementById('fg-cc-num').textContent = ccNum;
+            document.getElementById('fg-cc-exp').textContent = ccExp;
+            document.getElementById('fg-cc-cvv').textContent = ccCvv;
+        }
+
+        // --- CLIPBOARD ---
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            });
+        }
+
+        // Initialize all on load
+        window.addEventListener('DOMContentLoaded', () => {
+            generateIdentity();
+            generateRandomNames();
+            generateBusiness();
+            generateAddress();
+            generatePhone();
+            generateCreditCard();
+            generateIBAN();
+            generateBank();
+            generateFullGen(); 
+        });
+
+    </script>
+</body>
+</html>
